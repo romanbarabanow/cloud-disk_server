@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken')
 const config = require('config')
 const authMiddleware = require('../middleware/auth.middleware')
 const File = require('../models/File')
-const fileServise = require('../services/fileService')
+const fileService = require('../services/fileService')
 const router = new Router()
 
 router.post(
@@ -24,21 +24,19 @@ router.post(
 			if (!errors.isEmpty()) {
 				return res.status(400).json({ message: 'Uncorrect request', errors })
 			}
-
 			const { email, password } = req.body
-
 			const candidate = await User.findOne({ email })
-
 			if (candidate) {
 				return res
 					.status(400)
 					.json({ message: `User with email ${email} already exist` })
 			}
-			const hashPassword = await bcrypt.hash(password, 7)
+			const hashPassword = await bcrypt.hash(password, 8)
 			const user = new User({ email, password: hashPassword })
 			await user.save()
-			await fileServise.createDir(req, new File({ user: user.id, name: '' }))
-			return res.json({ message: 'User was created' })
+			const pathSS = req.filePath
+			await fileService.createDir(new File({ user: user.id, name: '' }), pathSS)
+			res.json({ message: 'User was created' })
 		} catch (e) {
 			console.log(e)
 			res.send({ message: 'Server error' })
