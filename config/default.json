@@ -1,0 +1,6 @@
+{
+	"serverPort": 5000,
+	"dbUrl": "mongodb+srv://roman2007:Roman2007asd@cloud.yzobg9e.mongodb.net/?retryWrites=true&w=majority",
+	"secretKey": "jdabdia3onr5ojnbdjnspsvbd77867676d9vud9v",
+	"filePath": "/Users/wroh/Desktop/code/JavaScript/cloud-disk/server/files/"
+}
